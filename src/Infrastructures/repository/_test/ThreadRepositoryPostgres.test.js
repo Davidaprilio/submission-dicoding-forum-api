@@ -17,7 +17,6 @@ describe('ThreadRepositoryPostgres', () => {
     });
 
     afterEach(async () => {
-        await ThreadsTableTestHelper.cleanTable();
         await UsersTableTestHelper.cleanTable();
     });
 

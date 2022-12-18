@@ -5,7 +5,7 @@ describe('a AddedComment entities', () => {
         // Arrange
         const payload = {
             id: 'comment-1',
-            thread: 'thread-1',
+            thread_id: 'thread-1',
             content: 'text comment',
         };
 
@@ -17,7 +17,7 @@ describe('a AddedComment entities', () => {
         // Arrange
         const payload = {
             id: 1,
-            thread: 'thread-1',
+            thread_id: 'thread-1',
             content: 1,
             owner: 1,
         };
@@ -30,16 +30,16 @@ describe('a AddedComment entities', () => {
         // Arrange
         const payload = {
             id: 'comment-1',
-            thread: 'thread-1',
+            thread_id: 'thread-1',
             content: 'text comment',
             owner: 'user-1',
         };
 
         // Action and Assert
-        const { id, thread, content, owner } = new AddedComment(payload);
+        const { id, thread_id, content, owner } = new AddedComment(payload);
 
         expect(id).toEqual(payload.id);
-        expect(thread).toEqual(payload.thread);
+        expect(thread_id).toEqual(payload.thread_id);
         expect(content).toEqual(payload.content);
         expect(owner).toEqual(payload.owner);
     });
