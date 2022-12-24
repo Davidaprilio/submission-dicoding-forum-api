@@ -28,11 +28,11 @@ exports.up = (pgm) => {
         },
     })
 
-    pgm.createConstraint(
-        'comments', 
-        'fk_comments.owner_users.id', 
-        'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE'
-    );
+    // pgm.createConstraint(
+    //     'comments', 
+    //     'fk_comments.owner_users.id', 
+    //     'FOREIGN KEY(owner) REFERENCES users(id)'
+    // );
     pgm.createConstraint(
         'comments', 
         'fk_comments.thread_id_threads.id', 
