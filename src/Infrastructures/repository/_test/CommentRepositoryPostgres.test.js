@@ -28,7 +28,7 @@ describe('CommentRepositoryPostgres', () => {
     afterEach(async () => {
         await UsersTableTestHelper.cleanTable();
     });
-    
+
     afterAll(async () => {
         await pool.end();
     });
@@ -86,7 +86,7 @@ describe('CommentRepositoryPostgres', () => {
                 owner: 'user-1',
             });
 
-            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => { });
+            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => {});
 
             await expect(commentRepositoryPostgres.verifyOwner('comment-1', 'other-user'))
                 .rejects.toThrowError(AuthorizationError);
@@ -100,10 +100,27 @@ describe('CommentRepositoryPostgres', () => {
                 owner: 'user-1',
             });
 
-            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => { });
+            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => {});
 
             await expect(commentRepositoryPostgres.verifyOwner('comment-1', 'user-1'))
                 .resolves.not.toThrowError(AuthorizationError);
+        });
+    });
+
+    describe('deleteComment function', () => {
+        it('should update deleted_at column with date now to deleted comment', async () => {
+            await CommentsTableTestHelper.addComment({
+                id: 'comment-1',
+                content: 'text comment',
+                thread: 'thread-1',
+                owner: 'user-1',
+            });
+
+            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => {});
+            await commentRepositoryPostgres.deleteComment('comment-1');
+
+            const deletedComment = await CommentsTableTestHelper.findCommentById('comment-1');
+            expect(deletedComment[0].deleted_at).not.toBeNull();
         });
     });
 });

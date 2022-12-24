@@ -43,6 +43,17 @@ class CommentRepositoryPostgres extends CommentRepository {
             throw new AuthorizationError('anda tidak mempunyai akses ke resouce ini');
         }
     }
+
+    async deleteComment(id) {
+        const dateNow = new Date();
+        const query = {
+            text: 'UPDATE comments SET deleted_at=$1 WHERE id=$2',
+            values: [dateNow, id]
+        }
+
+        await this._pool.query(query)
+
+    }
 }
 
 module.exports = CommentRepositoryPostgres
