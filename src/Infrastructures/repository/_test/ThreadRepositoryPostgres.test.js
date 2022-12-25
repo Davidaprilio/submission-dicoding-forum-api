@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const pool = require('../../database/postgres/pool');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
@@ -5,16 +7,14 @@ const AddThread = require('../../../Domains/threads/entities/AddThread');
 const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
-const DetailThread = require('../../../Domains/threads/entities/DetailThread');
 
 describe('ThreadRepositoryPostgres', () => {
-
     beforeEach(async () => {
         await UsersTableTestHelper.addUser({
             id: 'user-1',
-            username: 'dicoding', 
-            password: 'secret', 
-            fullname: 'Dicoding Indonesia'
+            username: 'dicoding',
+            password: 'secret',
+            fullname: 'Dicoding Indonesia',
         });
     });
 
@@ -81,13 +81,13 @@ describe('ThreadRepositoryPostgres', () => {
 
             await threadRepositoryPostgres.addThread(addThread);
 
-            const detailThread = await threadRepositoryPostgres.getThreadById('thread-123')
-            expect(detailThread.id).toEqual('thread-123')
-            expect(detailThread.title).toEqual(addThread.title)
-            expect(detailThread.body).toEqual(addThread.body)
-            expect(detailThread.owner).toEqual(addThread.owner)
-            expect(detailThread).toHaveProperty('username')
-            expect(detailThread).toHaveProperty('created_at')
+            const detailThread = await threadRepositoryPostgres.getThreadById('thread-123');
+            expect(detailThread.id).toEqual('thread-123');
+            expect(detailThread.title).toEqual(addThread.title);
+            expect(detailThread.body).toEqual(addThread.body);
+            expect(detailThread.owner).toEqual(addThread.owner);
+            expect(detailThread).toHaveProperty('username');
+            expect(detailThread).toHaveProperty('created_at');
         });
     });
 });

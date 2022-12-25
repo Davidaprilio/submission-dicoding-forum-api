@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const AddThread = require('../AddThread');
 
 describe('a AddThread entities', () => {
@@ -14,7 +16,7 @@ describe('a AddThread entities', () => {
     it('should throw error when payload did not meet data type specification', () => {
         // Arrange
         const payload = {
-            body: "thread body ...",
+            body: 'thread body ...',
             title: 'thread abc',
             owner: 123,
         };
@@ -27,7 +29,7 @@ describe('a AddThread entities', () => {
         // Arrange
         const payload = {
             title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            body: "thread body ...",
+            body: 'thread body ...',
             owner: 'user-1',
         };
 

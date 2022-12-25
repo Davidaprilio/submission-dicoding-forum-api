@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+
 class DetailThread {
     constructor(payload) {
         this._verifyPayload(payload);
@@ -21,11 +23,11 @@ class DetailThread {
         }
 
         if (
-            typeof id !== 'string' || 
-            typeof title !== 'string' || 
-            typeof body !== 'string' || 
-            typeof created_at !== 'string' || 
-            typeof username !== 'string'
+            typeof id !== 'string'
+            || typeof title !== 'string'
+            || typeof body !== 'string'
+            || typeof created_at !== 'string'
+            || typeof username !== 'string'
         ) {
             throw new Error('DETAIL_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }

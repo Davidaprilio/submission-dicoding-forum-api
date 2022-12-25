@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 exports.up = (pgm) => {
     pgm.createTable('threads', {
         id: {
@@ -23,15 +21,15 @@ exports.up = (pgm) => {
             notNull: true,
             default: pgm.func('CURRENT_TIMESTAMP'),
         },
-    })
+    });
 
     pgm.createConstraint(
-        'threads', 
-        'fk_threads.owner_users.id', 
-        'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE'
+        'threads',
+        'fk_threads.owner_users.id',
+        'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE',
     );
 };
 
 exports.down = (pgm) => {
-    pgm.dropTable('threads')
+    pgm.dropTable('threads');
 };

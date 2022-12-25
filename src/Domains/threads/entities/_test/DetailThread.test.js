@@ -1,4 +1,6 @@
-const DetailThread = require('../DetailThread')
+/* eslint-disable no-undef */
+
+const DetailThread = require('../DetailThread');
 
 describe('a DetailThread entities', () => {
     it('should throw error when payload did not contain needed property', () => {
@@ -36,14 +38,18 @@ describe('a DetailThread entities', () => {
             username: 'david',
         };
 
-        const { body, title, id, date, username } = new DetailThread(payload);
+        const {
+            body,
+            title,
+            id,
+            date,
+            username,
+        } = new DetailThread(payload);
 
         expect(body).toEqual(payload.body);
         expect(title).toEqual(payload.title);
         expect(id).toEqual(payload.id);
         expect(date).toEqual(payload.created_at);
         expect(username).toEqual(payload.username);
-
-    })
-
-})
+    });
+});

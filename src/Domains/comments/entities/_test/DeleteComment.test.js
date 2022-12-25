@@ -1,10 +1,12 @@
+/* eslint-disable no-undef */
+
 const DeleteComment = require('../DeleteComment');
 
 describe('a DeleteComment entities', () => {
     it('should throw error when payload did not contain needed property', () => {
         // Arrange
         const payload = {
-            commentId: 'comment-1'
+            commentId: 'comment-1',
         };
 
         // Action and Assert

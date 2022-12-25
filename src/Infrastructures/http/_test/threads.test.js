@@ -1,14 +1,15 @@
+/* eslint-disable no-undef */
+
 const pool = require('../../database/postgres/pool');
 const createServer = require('../createServer');
 const container = require('../../container');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 
 describe('/threads endpoint', () => {
-
     afterEach(async () => {
         await UsersTableTestHelper.cleanTable();
     });
-    
+
     afterAll(async () => {
         await pool.end();
     });
@@ -66,14 +67,14 @@ describe('/threads endpoint', () => {
 
             const response = await server.inject({
                 method: 'GET',
-                url: `/threads/thread-0`,
+                url: '/threads/thread-0',
             });
             const responseJson = JSON.parse(response.payload);
 
             expect(response.statusCode).toEqual(404);
             expect(responseJson.status).toEqual('fail');
             expect(responseJson.message).toBeDefined();
-        })
+        });
 
         it('should response 200 and new thread', async () => {
             const server = await createServer(container);
@@ -109,7 +110,7 @@ describe('/threads endpoint', () => {
                     authorization: `Bearer ${accessToken}`,
                 },
             });
-            const {data: { addedThread }} = JSON.parse(responseAddThread.payload);
+            const { data: { addedThread } } = JSON.parse(responseAddThread.payload);
 
             const response = await server.inject({
                 method: 'GET',

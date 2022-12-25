@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const pool = require('../../database/postgres/pool');
 const CommentRepositoryPostgres = require('../CommentRepositoryPostgres');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
@@ -9,20 +11,19 @@ const AuthorizationError = require('../../../Commons/exceptions/AuthorizationErr
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
 describe('CommentRepositoryPostgres', () => {
-
     beforeEach(async () => {
         await UsersTableTestHelper.addUser({
             id: 'user-1',
             username: 'dicoding',
             password: 'secret',
-            fullname: 'Dicoding Indonesia'
+            fullname: 'Dicoding Indonesia',
         });
         await ThreadsTableTestHelper.addThread({
             id: 'thread-1',
             title: 'thread abc',
             body: 'thread abc body ...',
             owner: 'user-1',
-        })
+        });
     });
 
     afterEach(async () => {
@@ -138,7 +139,7 @@ describe('CommentRepositoryPostgres', () => {
             const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => {});
             const detailThread = await commentRepositoryPostgres.getCommentsFromThread('thread-1');
 
-                expect(detailThread).toHaveLength(1);
+            expect(detailThread).toHaveLength(1);
             expect(detailThread[0].id).toStrictEqual(payload.id);
             expect(detailThread[0].content).toStrictEqual(payload.content);
             expect(detailThread[0].owner).toStrictEqual(payload.owner);

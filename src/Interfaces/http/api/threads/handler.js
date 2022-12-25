@@ -2,52 +2,45 @@ const AddThreadUseCase = require('../../../../Applications/use_case/threads/AddT
 const GetDetailThreadUseCase = require('../../../../Applications/use_case/threads/GetDetailThreadUseCase');
 
 class ThreadsHandler {
-	constructor(container) {
-		this._container = container;
+    constructor(container) {
+        this._container = container;
 
-		this.postThreadHandler = this.postThreadHandler.bind(this);
-		this.getThreadDetailHandler = this.getThreadDetailHandler.bind(this);
-	}
+        this.postThreadHandler = this.postThreadHandler.bind(this);
+        this.getThreadDetailHandler = this.getThreadDetailHandler.bind(this);
+    }
 
-	async postThreadHandler(request, h) {
-		const { id: userId } = request.auth.credentials;
+    async postThreadHandler(request, h) {
+        const { id: userId } = request.auth.credentials;
 
-		const addThreadUseCase = this._container.getInstance(AddThreadUseCase.name);
-		const addedThread = await addThreadUseCase.execute({
-			...request.payload,
-			owner: userId,
-		});
+        const addThreadUseCase = this._container.getInstance(AddThreadUseCase.name);
+        const addedThread = await addThreadUseCase.execute({
+            ...request.payload,
+            owner: userId,
+        });
 
-		const response = h.response({
-			status: 'success',
-			data: {
-				addedThread,
-			},
-		});
-		response.code(201);
-		return response;
-	}
+        const response = h.response({
+            status: 'success',
+            data: {
+                addedThread,
+            },
+        });
+        response.code(201);
+        return response;
+    }
 
-	async getThreadDetailHandler(request, h) {
-		const { threadId } = request.params
+    async getThreadDetailHandler(request, h) {
+        const { threadId } = request.params;
 
-		// try {
-			const getDetailThreadUseCase = this._container.getInstance(GetDetailThreadUseCase.name);
-			const thread = await getDetailThreadUseCase.execute(threadId);
-		// } catch (error) {
-		// 	if (error instanceof Error) {
-		// 		console.error(error)
-		// 	}
-		// 	throw error
-		// }
+        const getDetailThreadUseCase = this._container.getInstance(GetDetailThreadUseCase.name);
+        const thread = await getDetailThreadUseCase.execute(threadId);
 
-		return h.response({
-			status: 'success',
-			data: {
-				thread
-			}
-		});
-	}
+        return h.response({
+            status: 'success',
+            data: {
+                thread,
+            },
+        });
+    }
 }
 
 module.exports = ThreadsHandler;

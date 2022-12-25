@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+
 class AddComment {
     constructor(payload) {
         this._verifyPayload(payload);

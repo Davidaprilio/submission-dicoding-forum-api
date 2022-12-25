@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const AddedComment = require('../AddedComment');
 
 describe('a AddedComment entities', () => {
@@ -36,7 +38,12 @@ describe('a AddedComment entities', () => {
         };
 
         // Action and Assert
-        const { id, thread_id, content, owner } = new AddedComment(payload);
+        const {
+            id,
+            thread_id,
+            content,
+            owner,
+        } = new AddedComment(payload);
 
         expect(id).toEqual(payload.id);
         expect(thread_id).toEqual(payload.thread_id);

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const pool = require('../../database/postgres/pool');
 const createServer = require('../createServer');
 const container = require('../../container');
@@ -10,7 +12,6 @@ let userAccessToken = '';
 let secondUserAccessToken = '';
 
 describe('/comments endpoint', () => {
-
     beforeAll(async () => {
         server = await createServer(container);
         await server.inject({
@@ -31,7 +32,7 @@ describe('/comments endpoint', () => {
                 fullname: 'Dicoding Indonesia Second',
             },
         });
-        
+
         const loginResponse = await server.inject({
             method: 'POST',
             url: '/authentications',
@@ -49,10 +50,10 @@ describe('/comments endpoint', () => {
             },
         });
         const jsonUser1 = JSON.parse(loginResponse.payload);
-        userAccessToken = jsonUser1.data.accessToken
-        
+        userAccessToken = jsonUser1.data.accessToken;
+
         const jsonUser2 = JSON.parse(loginOtherUserResponse.payload);
-        secondUserAccessToken = jsonUser2.data.accessToken
+        secondUserAccessToken = jsonUser2.data.accessToken;
 
         const reponseThread = await server.inject({
             method: 'POST',
@@ -66,10 +67,10 @@ describe('/comments endpoint', () => {
             },
         });
 
-        const {data: { addedThread }} = JSON.parse(reponseThread.payload);
-        
-        threadId = addedThread.id
-    })
+        const { data: { addedThread } } = JSON.parse(reponseThread.payload);
+
+        threadId = addedThread.id;
+    });
 
     afterAll(async () => {
         await UsersTableTestHelper.cleanTable();
@@ -82,7 +83,7 @@ describe('/comments endpoint', () => {
                 method: 'POST',
                 url: `/threads/${threadId}/comments`,
                 payload: {
-                    content: "text comment..."
+                    content: 'text comment...',
                 },
                 headers: {
                     authorization: `Bearer ${userAccessToken}`,
@@ -94,7 +95,7 @@ describe('/comments endpoint', () => {
             expect(response.statusCode).toEqual(201);
             expect(responseJson.status).toEqual('success');
             expect(responseJson.data.addedComment).toBeDefined();
-            commentId = responseJson.data.addedComment.id
+            commentId = responseJson.data.addedComment.id;
         });
     });
 
@@ -130,7 +131,6 @@ describe('/comments endpoint', () => {
         });
 
         it('should response 200 when deleted comment', async () => {
-            
             const response = await server.inject({
                 method: 'DELETE',
                 url: `/threads/${threadId}/comments/${commentId}`,

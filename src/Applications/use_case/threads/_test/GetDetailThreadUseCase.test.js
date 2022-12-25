@@ -1,20 +1,20 @@
-const ThreadRepository = require('../../../../Domains/threads/ThreadRepository')
-const AddedThread = require('../../../../Domains/threads/entities/AddedThread')
-const AddThread = require('../../../../Domains/threads/entities/AddThread')
-const GetDetailThreadUseCase = require('../GetDetailThreadUseCase')
-const CommentRepository = require('../../../../Domains/comments/CommentRepository')
+/* eslint-disable no-undef */
+
+const ThreadRepository = require('../../../../Domains/threads/ThreadRepository');
+const GetDetailThreadUseCase = require('../GetDetailThreadUseCase');
+const CommentRepository = require('../../../../Domains/comments/CommentRepository');
 
 describe('GetDetailThreadUseCase', () => {
     /**
-	 * Menguji apakah use case mampu mengoskestrasikan langkah demi langkah dengan benar.
-	 */
+     * Menguji apakah use case mampu mengoskestrasikan langkah demi langkah dengan benar.
+     */
     it('should orchestrating the get detail a thread action correctly', async () => {
-		// Arrange
-		const useCasePayload = {
-			threadId: 'thread-123',
-		};
+        // Arrange
+        const useCasePayload = {
+            threadId: 'thread-123',
+        };
 
-		const expectedGetThreadById = {
+        const expectedGetThreadById = {
             id: 'thread-123',
             title: 'thread abc',
             body: 'thread abc ...',
@@ -41,31 +41,31 @@ describe('GetDetailThreadUseCase', () => {
                 thread: 'thread-sDqKxL7WmBRhBubZ5jrds',
                 created_at: '2022-12-18 23:46:57.657136+07',
                 deleted_at: null,
-            }
-        ]
+            },
+        ];
 
-		const mockThreadRepository = new ThreadRepository();
-		const mockCommentRepository = new CommentRepository();
+        const mockThreadRepository = new ThreadRepository();
+        const mockCommentRepository = new CommentRepository();
 
-		mockThreadRepository.getThreadById = jest.fn()
-			.mockImplementation(() => Promise.resolve(expectedGetThreadById));
+        mockThreadRepository.getThreadById = jest.fn()
+            .mockImplementation(() => Promise.resolve(expectedGetThreadById));
         mockCommentRepository.getCommentsFromThread = jest.fn()
-            .mockImplementation(() => Promise.resolve(expectedGetCommentsFromThread))
+            .mockImplementation(() => Promise.resolve(expectedGetCommentsFromThread));
 
-		const getDetailThreadUseCase = new GetDetailThreadUseCase({
-			threadRepository: mockThreadRepository,
-            commentRepository: mockCommentRepository
-		});
+        const getDetailThreadUseCase = new GetDetailThreadUseCase({
+            threadRepository: mockThreadRepository,
+            commentRepository: mockCommentRepository,
+        });
 
-		// Action
-		const detailThread = await getDetailThreadUseCase.execute(useCasePayload.threadId);
+        // Action
+        const detailThread = await getDetailThreadUseCase.execute(useCasePayload.threadId);
 
-		// Assert
+        // Assert
         expect(mockThreadRepository.getThreadById)
             .toHaveBeenCalledWith(useCasePayload.threadId);
         expect(mockCommentRepository.getCommentsFromThread)
             .toHaveBeenCalledWith(useCasePayload.threadId);
-            
+
         expect(detailThread.id).toEqual(expectedGetThreadById.id);
         expect(detailThread.title).toEqual(expectedGetThreadById.title);
         expect(detailThread.body).toEqual(expectedGetThreadById.body);
@@ -86,5 +86,5 @@ describe('GetDetailThreadUseCase', () => {
                 content: expectedGetCommentsFromThread[1].content,
             },
         ]);
-	});
-})
+    });
+});

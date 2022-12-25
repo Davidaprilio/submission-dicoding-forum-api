@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 exports.up = (pgm) => {
     pgm.createTable('comments', {
         id: {
@@ -26,20 +24,20 @@ exports.up = (pgm) => {
         deleted_at: {
             type: 'VARCHAR',
         },
-    })
+    });
 
     // pgm.createConstraint(
-    //     'comments', 
-    //     'fk_comments.owner_users.id', 
-    //     'FOREIGN KEY(owner) REFERENCES users(id)'
+    //     'comments',
+    //     'fk_comments.owner_users.id',
+    //     'FOREIGN KEY(owner) REFERENCES users(id)',
     // );
     pgm.createConstraint(
-        'comments', 
-        'fk_comments.thread_id_threads.id', 
-        'FOREIGN KEY(thread_id) REFERENCES threads(id) ON DELETE CASCADE'
+        'comments',
+        'fk_comments.thread_id_threads.id',
+        'FOREIGN KEY(thread_id) REFERENCES threads(id) ON DELETE CASCADE',
     );
 };
 
 exports.down = (pgm) => {
-    pgm.dropTable('comments')
+    pgm.dropTable('comments');
 };

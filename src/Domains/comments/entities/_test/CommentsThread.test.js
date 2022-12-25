@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const CommentsThread = require('../CommentsThread');
 
 describe('a CommentsThread entities', () => {
@@ -9,7 +11,7 @@ describe('a CommentsThread entities', () => {
                 content: 'sebuah comment',
                 owner: 'user-1',
                 thread: 'thread-wSKIx-KrKicyFmke_XiTo',
-                created_at: '2022-12-18 23:46:55.445067+07'
+                created_at: '2022-12-18 23:46:55.445067+07',
             },
         ];
 
@@ -27,7 +29,7 @@ describe('a CommentsThread entities', () => {
                 username: 1,
                 thread: 'thread-wSKIx-KrKicyFmke_XiTo',
                 created_at: '2022-12-18 23:46:55.445067+07',
-                deleted_at: '2022-12-14 23:46:55.445067+07'
+                deleted_at: '2022-12-14 23:46:55.445067+07',
             },
         ];
 
@@ -45,7 +47,7 @@ describe('a CommentsThread entities', () => {
                 username: 'david',
                 thread: 'thread-wSKIx-KrKicyFmke_XiTo',
                 created_at: '2022-12-18 23:46:55.445067+07',
-                deleted_at: null
+                deleted_at: null,
             },
             {
                 id: 'comment-1',
@@ -72,7 +74,7 @@ describe('a CommentsThread entities', () => {
                 username: payload[1].username,
                 date: payload[1].created_at,
                 content: '**komentar telah dihapus**',
-            }
+            },
         ]);
     });
 });

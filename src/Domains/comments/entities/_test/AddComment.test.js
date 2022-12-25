@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const AddComment = require('../AddComment');
 
 describe('a AddComment entities', () => {

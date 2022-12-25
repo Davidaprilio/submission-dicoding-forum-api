@@ -22,7 +22,6 @@ class CommentRepositoryPostgres extends CommentRepository {
         const result = await this._pool.query(query);
 
         return new AddedComment({ ...result.rows[0] });
-
     }
 
     async verifyOwner(id, owner) {
@@ -48,11 +47,10 @@ class CommentRepositoryPostgres extends CommentRepository {
         const dateNow = new Date();
         const query = {
             text: 'UPDATE comments SET deleted_at=$1 WHERE id=$2',
-            values: [dateNow, id]
-        }
+            values: [dateNow, id],
+        };
 
         await this._pool.query(query);
-
     }
 
     async getCommentsFromThread(threadId) {
@@ -61,13 +59,13 @@ class CommentRepositoryPostgres extends CommentRepository {
                 LEFT JOIN users ON users.id = comments.owner 
                 WHERE thread_id = $1 
                 ORDER BY comments.created_at ASC`,
-            values: [threadId]
-        }
+            values: [threadId],
+        };
 
         const result = await this._pool.query(query);
 
-        return result.rows
+        return result.rows;
     }
 }
 
-module.exports = CommentRepositoryPostgres
+module.exports = CommentRepositoryPostgres;
