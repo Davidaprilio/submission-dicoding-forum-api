@@ -5,7 +5,7 @@ class DetailThread {
         this.id = payload.id;
         this.title = payload.title;
         this.body = payload.body;
-        this.date = payload.createdAt;
+        this.date = payload.created_at;
         this.username = payload.username;
     }
 
@@ -13,10 +13,10 @@ class DetailThread {
         id,
         title,
         body,
-        createdAt,
+        created_at,
         username,
     }) {
-        if (!id || !title || !body || !createdAt || !username) {
+        if (!id || !title || !body || !created_at || !username) {
             throw new Error('DETAIL_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
@@ -24,14 +24,10 @@ class DetailThread {
             typeof id !== 'string' || 
             typeof title !== 'string' || 
             typeof body !== 'string' || 
-            typeof createdAt !== 'string' || 
+            typeof created_at !== 'string' || 
             typeof username !== 'string'
         ) {
             throw new Error('DETAIL_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
-        }
-
-        if (title.length > 200) {
-            throw new Error('DETAIL_THREAD.TITLE_LIMIT_CHAR');
         }
     }
 }

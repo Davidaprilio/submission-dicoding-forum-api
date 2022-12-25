@@ -123,4 +123,30 @@ describe('CommentRepositoryPostgres', () => {
             expect(deletedComment[0].deleted_at).not.toBeNull();
         });
     });
+
+    describe('getCommentsFromThread function', () => {
+        it('should get all comment with given thread id', async () => {
+            const payload = {
+                id: 'comment-1',
+                content: 'sebuah comment',
+                owner: 'user-1',
+                thread: 'thread-1',
+            };
+
+            CommentsTableTestHelper.addComment(payload);
+
+            const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, () => {});
+            const detailThread = await commentRepositoryPostgres.getCommentsFromThread('thread-1');
+
+                expect(detailThread).toHaveLength(1);
+            expect(detailThread[0].id).toStrictEqual(payload.id);
+            expect(detailThread[0].content).toStrictEqual(payload.content);
+            expect(detailThread[0].owner).toStrictEqual(payload.owner);
+            expect(detailThread[0].thread_id).toStrictEqual(payload.thread);
+
+            expect(detailThread[0]).toHaveProperty('created_at');
+            expect(detailThread[0]).toHaveProperty('username');
+            expect(detailThread[0]).toHaveProperty('deleted_at');
+        });
+    });
 });

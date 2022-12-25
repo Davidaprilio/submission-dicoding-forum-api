@@ -19,26 +19,12 @@ describe('a DetailThread entities', () => {
             id: 123,
             title: 'thread abc',
             body: 'abc',
-            createdAt: 123,
-            username: 123,
+            created_at: 123,
+            username: 'david',
         };
 
         // Action and Assert
         expect(() => new DetailThread(payload)).toThrowError('DETAIL_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
-    });
-
-    it('should throw an error when the title exceeds the max', () => {
-        // Arrange
-        const payload = {
-            id: 'thread-1',
-            title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            body: 'abcde ...',
-            createdAt: '2021-08-08T07:19:09.775Z',
-            username: 'user-1',
-        };
-
-        // Action and Assert
-        expect(() => new DetailThread(payload)).toThrowError('DETAIL_THREAD.TITLE_LIMIT_CHAR');
     });
 
     it('must create DetailThread object Correctly', () => {
@@ -46,8 +32,8 @@ describe('a DetailThread entities', () => {
             id: 'thread-1',
             title: 'thread abc',
             body: 'abcde ...',
-            createdAt: '2021-08-08T07:19:09.775Z',
-            username: 'user-1',
+            created_at: '2021-08-08T07:19:09.775Z',
+            username: 'david',
         };
 
         const { body, title, id, date, username } = new DetailThread(payload);
@@ -55,7 +41,7 @@ describe('a DetailThread entities', () => {
         expect(body).toEqual(payload.body);
         expect(title).toEqual(payload.title);
         expect(id).toEqual(payload.id);
-        expect(date).toEqual(payload.createdAt);
+        expect(date).toEqual(payload.created_at);
         expect(username).toEqual(payload.username);
 
     })

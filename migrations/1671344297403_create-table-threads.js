@@ -18,6 +18,11 @@ exports.up = (pgm) => {
             type: 'VARCHAR(50)',
             notNull: true,
         },
+        created_at: {
+            type: 'VARCHAR',
+            notNull: true,
+            default: pgm.func('CURRENT_TIMESTAMP'),
+        },
     })
 
     pgm.createConstraint(
