@@ -70,24 +70,24 @@ describe('ThreadRepositoryPostgres', () => {
         });
 
         it('should return thread data if exist', async () => {
-            const addThread = new AddThread({
-                title: 'thread title',
-                body: 'thread body',
+            const thread = {
+                id: 'thread-123',
+                title: 'thread abc',
+                body: 'thread abc body ...',
                 owner: 'user-1',
-            });
+                created_at: (new Date()).toISOString(),
+            };
+            await ThreadsTableTestHelper.addThread(thread);
 
-            const fakeIdGenerator = () => '123'; // stub!
-            const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, fakeIdGenerator);
-
-            await threadRepositoryPostgres.addThread(addThread);
-
+            const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, () => {});
             const detailThread = await threadRepositoryPostgres.getThreadById('thread-123');
-            expect(detailThread.id).toEqual('thread-123');
-            expect(detailThread.title).toEqual(addThread.title);
-            expect(detailThread.body).toEqual(addThread.body);
-            expect(detailThread.owner).toEqual(addThread.owner);
-            expect(detailThread).toHaveProperty('username');
-            expect(detailThread).toHaveProperty('created_at');
+
+            expect(detailThread.id).toEqual(thread.id);
+            expect(detailThread.title).toEqual(thread.title);
+            expect(detailThread.body).toEqual(thread.body);
+            expect(detailThread.owner).toEqual(thread.owner);
+            expect(detailThread.created_at).toEqual(thread.created_at);
+            expect(detailThread.username).toEqual('dicoding'); // from username on BeforeEach
         });
     });
 });

@@ -132,6 +132,7 @@ describe('CommentRepositoryPostgres', () => {
                 content: 'sebuah comment',
                 owner: 'user-1',
                 thread: 'thread-1',
+                created_at: (new Date()).toISOString(),
             };
 
             CommentsTableTestHelper.addComment(payload);
@@ -144,10 +145,9 @@ describe('CommentRepositoryPostgres', () => {
             expect(detailThread[0].content).toStrictEqual(payload.content);
             expect(detailThread[0].owner).toStrictEqual(payload.owner);
             expect(detailThread[0].thread_id).toStrictEqual(payload.thread);
-
-            expect(detailThread[0]).toHaveProperty('created_at');
-            expect(detailThread[0]).toHaveProperty('username');
-            expect(detailThread[0]).toHaveProperty('deleted_at');
+            expect(detailThread[0].created_at).toStrictEqual(payload.created_at);
+            expect(detailThread[0].username).toStrictEqual('dicoding'); // from username on BeforeEach
+            expect(detailThread[0].deleted_at).toStrictEqual(null);
         });
     });
 });
