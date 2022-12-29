@@ -3,7 +3,6 @@
 const CommentRepository = require('../../../../Domains/comments/CommentRepository');
 const ThreadRepository = require('../../../../Domains/threads/ThreadRepository');
 const AddedComment = require('../../../../Domains/comments/entities/AddedComment');
-const AddedThread = require('../../../../Domains/threads/entities/AddedThread');
 const AddComment = require('../../../../Domains/comments/entities/AddComment');
 const AddCommentUseCase = require('../AddCommentUseCase');
 
@@ -40,13 +39,8 @@ describe('AddCommentUseCase', () => {
             })),
         );
 
-        mockThreadRepository.getThreadById = jest.fn().mockImplementation(
-            () => Promise.resolve(new AddedThread({
-                id: 'thread-1',
-                title: 'thread abc',
-                owner: 'user-1',
-            })),
-        );
+        mockThreadRepository.verifyThreadAvaibility = jest.fn()
+            .mockImplementation(() => Promise.resolve());
 
         /** creating use case instance */
         const addCommentUseCase = new AddCommentUseCase({
@@ -59,7 +53,9 @@ describe('AddCommentUseCase', () => {
 
         // Assert
         expect(addedComment).toStrictEqual(expectedAddedComment);
-        expect(mockThreadRepository.getThreadById).toBeCalledWith(useCasePayload.thread_id);
+        expect(mockThreadRepository.verifyThreadAvaibility)
+            .toBeCalledWith(useCasePayload.thread_id);
+
         expect(mockCommentRepository.addComment).toBeCalledWith(new AddComment({
             content: useCasePayload.content,
             thread_id: useCasePayload.thread_id,

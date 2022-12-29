@@ -90,4 +90,26 @@ describe('ThreadRepositoryPostgres', () => {
             expect(detailThread.username).toEqual('dicoding'); // from username on BeforeEach
         });
     });
+
+    describe('verifyThreadAvaibility function', () => {
+        it('should throw NotFoundError when thread not found', async () => {
+            const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, () => {});
+            await expect(threadRepositoryPostgres.verifyThreadAvaibility('thread-1'))
+                .rejects.toThrowError(NotFoundError);
+        });
+
+        it('not throw NotFoundError when thread found', async () => {
+            const thread = {
+                id: 'thread-1',
+                title: 'thread abc',
+                body: 'thread abc body ...',
+                owner: 'user-1',
+            };
+            await ThreadsTableTestHelper.addThread(thread);
+
+            const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, () => {});
+            await expect(threadRepositoryPostgres.verifyThreadAvaibility('thread-1'))
+                .resolves.not.toThrow(NotFoundError);
+        });
+    });
 });
