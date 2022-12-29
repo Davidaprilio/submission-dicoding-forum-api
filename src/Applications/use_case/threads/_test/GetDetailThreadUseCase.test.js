@@ -47,10 +47,36 @@ describe('GetDetailThreadUseCase', () => {
         const mockThreadRepository = new ThreadRepository();
         const mockCommentRepository = new CommentRepository();
 
-        mockThreadRepository.getThreadById = jest.fn()
-            .mockImplementation(() => Promise.resolve(expectedGetThreadById));
-        mockCommentRepository.getCommentsFromThread = jest.fn()
-            .mockImplementation(() => Promise.resolve(expectedGetCommentsFromThread));
+        mockThreadRepository.getThreadById = jest.fn().mockImplementation(() => Promise.resolve({
+            id: 'thread-123',
+            title: 'thread abc',
+            body: 'thread abc ...',
+            created_at: '2022-12-18 23:46:55.208221+07',
+            owner: 'user-1',
+            username: 'david',
+        }));
+        mockCommentRepository.getCommentsFromThread = jest.fn().mockImplementation(
+            () => Promise.resolve([
+                {
+                    id: 'comment-1',
+                    content: 'sebuah comment',
+                    owner: 'user-1',
+                    username: 'david',
+                    thread: 'thread-wSKIx-KrKicyFmke_XiTo',
+                    created_at: '2022-12-17 23:46:55.445067+07',
+                    deleted_at: '2022-12-18 23:46:55.445067+07',
+                },
+                {
+                    id: 'comment-1',
+                    content: 'sebuah comment',
+                    owner: 'user-1',
+                    username: 'david',
+                    thread: 'thread-sDqKxL7WmBRhBubZ5jrds',
+                    created_at: '2022-12-18 23:46:57.657136+07',
+                    deleted_at: null,
+                },
+            ]),
+        );
 
         const getDetailThreadUseCase = new GetDetailThreadUseCase({
             threadRepository: mockThreadRepository,
